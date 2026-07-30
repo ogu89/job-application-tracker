@@ -11,3 +11,29 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model JobApplication {
+  id            String            @id @default(uuid())
+  companyName   String
+  roleTitle     String
+  jobUrl        String?
+  recruiterName String?
+  salaryMin     Int?
+  salaryMax     Int?
+  status        ApplicationStatus @default(INTERESTED)
+  notes         String?
+  appliedAt     DateTime?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+enum ApplicationStatus {
+  INTERESTED
+  CONTACTED
+  APPLIED
+  SCREENING
+  INTERVIEW
+  OFFER
+  REJECTED
+  WITHDRAWN
+}
