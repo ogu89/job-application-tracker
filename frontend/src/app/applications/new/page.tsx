@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ApplicationForm } from "./application-form";
 
 export const metadata: Metadata = {
@@ -10,6 +11,13 @@ export default function NewApplicationPage() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-950 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl">
+        <Link
+          className="mb-6 inline-flex min-h-11 items-center text-sm font-semibold text-blue-700 underline-offset-4 hover:text-blue-800 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          href="/applications"
+        >
+          ← Back to applications
+        </Link>
+
         <header className="mb-8">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-600">
             Job tracker

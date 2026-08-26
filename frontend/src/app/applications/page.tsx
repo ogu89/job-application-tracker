@@ -99,16 +99,24 @@ export default async function ApplicationsPage() {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-950 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
-        <header className="mb-8">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-600">
-            Job tracker
-          </p>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Applications
-          </h1>
-          <p className="mt-2 text-slate-600">
-            Review the roles you are currently tracking.
-          </p>
+        <header className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-600">
+              Job tracker
+            </p>
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Applications
+            </h1>
+            <p className="mt-2 text-slate-600">
+              Review the roles you are currently tracking.
+            </p>
+          </div>
+          <Link
+            className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:w-auto"
+            href="/applications/new"
+          >
+            New Application
+          </Link>
         </header>
 
         {result.error ? (
@@ -124,15 +132,27 @@ export default async function ApplicationsPage() {
               Make sure the NestJS backend is running on port 3001, then refresh
               this page.
             </p>
+            <Link
+              className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-500 sm:w-auto"
+              href="/applications"
+            >
+              Try again
+            </Link>
           </section>
         ) : result.applications?.length === 0 ? (
-          <section className="rounded-xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+          <section className="rounded-xl border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-10">
             <h2 className="font-semibold text-slate-900">
               No applications yet
             </h2>
             <p className="mt-2 text-sm text-slate-600">
-              Applications returned by the API will appear here.
+              Add your first role to start tracking its progress.
             </p>
+            <Link
+              className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:w-auto"
+              href="/applications/new"
+            >
+              Add your first application
+            </Link>
           </section>
         ) : (
           <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">

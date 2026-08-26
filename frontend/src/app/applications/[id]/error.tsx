@@ -10,7 +10,7 @@ export default function ApplicationDetailError({
 }) {
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-950 sm:px-6 lg:px-8">
-      <section className="mx-auto max-w-3xl rounded-xl border border-rose-200 bg-white p-8 text-center shadow-sm">
+      <section className="mx-auto max-w-3xl rounded-xl border border-rose-200 bg-white p-6 text-center shadow-sm sm:p-8">
         <p className="text-sm font-semibold uppercase tracking-wider text-rose-700">
           Unable to load application
         </p>
