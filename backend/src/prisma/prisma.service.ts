@@ -11,8 +11,18 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       throw new Error('DATABASE_URL is not defined');
     }
 
+    const url = new URL(connectionString);
+
     const adapter = new PrismaPg({
-      connectionString,
+      host: url.hostname,
+      port: Number(url.port || 5432),
+      user: decodeURIComponent(url.username),
+      password: decodeURIComponent(url.password),
+      database: url.pathname.slice(1),
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      connectionTimeoutMillis: 5000,
     });
 
     super({ adapter });
