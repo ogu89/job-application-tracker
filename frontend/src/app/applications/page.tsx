@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 const APPLICATIONS_API_URL = "http://localhost:3001/applications";
 
@@ -159,8 +160,14 @@ export default async function ApplicationsPage() {
                       className="transition-colors hover:bg-slate-50"
                       key={application.id}
                     >
-                      <td className="whitespace-nowrap px-6 py-4 font-semibold text-slate-900">
-                        {application.companyName}
+                      <td className="whitespace-nowrap px-6 py-4 font-semibold">
+                        <Link
+                          aria-label={`View ${application.companyName} application`}
+                          className="text-blue-700 underline-offset-4 hover:text-blue-800 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                          href={`/applications/${application.id}`}
+                        >
+                          {application.companyName}
+                        </Link>
                       </td>
                       <td className="px-6 py-4 text-slate-700">
                         {application.roleTitle}
