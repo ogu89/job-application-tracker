@@ -3,7 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-const APPLICATIONS_API_URL = "http://localhost:3001/applications";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_URL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not defined");
+}
 
 export type CreateApplicationState = {
   error: string | null;
@@ -66,7 +70,7 @@ export async function createApplication(
   let response: Response;
 
   try {
-    response = await fetch(APPLICATIONS_API_URL, {
+    response = await fetch(`${API_URL}/applications`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -4,7 +4,11 @@ import { notFound } from "next/navigation";
 import { ApplicationEditForm } from "./application-edit-form";
 import { isApplication, type Application } from "./types";
 
-const APPLICATIONS_API_URL = "http://localhost:3001/applications";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_URL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not defined");
+}
 
 type ApplicationDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -19,12 +23,9 @@ async function getApplication(id: string): Promise<Application> {
   let response: Response;
 
   try {
-    response = await fetch(
-      `${APPLICATIONS_API_URL}/${encodeURIComponent(id)}`,
-      {
-        cache: "no-store",
-      },
-    );
+    response = await fetch(`${API_URL}/applications/${id}`, {
+      cache: "no-store",
+    });
   } catch {
     throw new Error("The applications API could not be reached.");
   }
@@ -34,9 +35,7 @@ async function getApplication(id: string): Promise<Application> {
   }
 
   if (!response.ok) {
-    throw new Error(
-      `The applications API returned status ${response.status}.`,
-    );
+    throw new Error(`The applications API returned status ${response.status}.`);
   }
 
   const application: unknown = await response.json();
@@ -71,9 +70,7 @@ export default async function ApplicationDetailPage({
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
             {application.companyName}
           </h1>
-          <p className="mt-2 text-lg text-slate-600">
-            {application.roleTitle}
-          </p>
+          <p className="mt-2 text-lg text-slate-600">{application.roleTitle}</p>
         </header>
 
         <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">

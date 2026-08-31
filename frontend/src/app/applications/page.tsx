@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-const APPLICATIONS_API_URL = "http://localhost:3001/applications";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_URL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not defined");
+}
 
 type ApplicationStatus =
   | "INTERESTED"
@@ -43,7 +47,7 @@ export const metadata: Metadata = {
 
 async function getApplications(): Promise<ApplicationsResult> {
   try {
-    const response = await fetch(APPLICATIONS_API_URL, {
+    const response = await fetch(`${API_URL}/applications`, {
       cache: "no-store",
     });
 

@@ -3,7 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { isApplicationStatus } from "./types";
 
-const APPLICATIONS_API_URL = "http://localhost:3001/applications";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_URL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not defined");
+}
 
 export type UpdateApplicationState = {
   error: string | null;
@@ -100,16 +104,13 @@ export async function updateApplication(
   let response: Response;
 
   try {
-    response = await fetch(
-      `${APPLICATIONS_API_URL}/${encodeURIComponent(id)}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+    response = await fetch(`${API_URL}/applications/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify(payload),
+    });
   } catch {
     return {
       error:
