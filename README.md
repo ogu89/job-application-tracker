@@ -2,6 +2,12 @@
 
 A deployed full-stack application for organizing job applications, tracking their status, and keeping notes throughout the application process.
 
+## Live Demo
+
+[Open the deployed Job Application Tracker](https://main.d20j24tn1h8i7q.amplifyapp.com/applications)
+
+The frontend is deployed from the `main` branch with AWS Amplify. It communicates with the NestJS API running on Amazon ECS.
+
 ## Features
 
 - List job applications
@@ -113,11 +119,18 @@ Open `http://localhost:3000` in a browser.
 
 ## Tests
 
-Run the backend Jest tests:
+Run the backend unit tests:
 
 ```bash
 cd backend
 npm test
+```
+
+The backend also includes an end-to-end test. It requires `DATABASE_URL` to be set in the command environment:
+
+```bash
+cd backend
+DATABASE_URL="<PostgreSQL connection string>" npm run test:e2e
 ```
 
 Run the frontend Vitest and Testing Library tests:
@@ -127,9 +140,19 @@ cd frontend
 npm test
 ```
 
+Build both applications with:
+
+```bash
+cd backend
+npm run build
+
+cd ../frontend
+npm run build
+```
+
 ## Deployment
 
-- **Frontend:** AWS Amplify builds and hosts the Next.js application. The backend base URL is supplied through the Amplify environment configuration.
+- **Frontend:** AWS Amplify automatically builds and deploys the `main` branch. The backend base URL is supplied through the Amplify environment configuration.
 - **Backend image:** The NestJS API is built as a Docker image and stored in Amazon ECR.
 - **Backend service:** Amazon ECS pulls the image from ECR and runs the API container. Runtime configuration, including the database connection, is provided outside the image.
 - **Database:** Amazon RDS hosts PostgreSQL, while Prisma handles database access and schema migrations.
