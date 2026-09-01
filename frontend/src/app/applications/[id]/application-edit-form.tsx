@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { startTransition, useActionState, useState } from "react";
+import type { SubmitEvent } from "react";
 import {
   updateApplication,
   type UpdateApplicationState,
@@ -68,8 +69,17 @@ export function ApplicationEditForm({
     }));
   }
 
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    startTransition(() => {
+      formAction(formData);
+    });
+  }
+
   return (
-    <form action={formAction} className="space-y-6">
+    <form className="space-y-6" onSubmit={handleSubmit}>
       <input name="id" type="hidden" value={application.id} />
 
       <div className="grid gap-6 sm:grid-cols-2">
